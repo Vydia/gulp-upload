@@ -16,7 +16,7 @@
     "gulp-util": "^3.0.5",
     "lodash": "^4.17.4",
     "through2": "^0.6.5",
-    "urllib": "^2.3.8"
+    "urllib": "^4.2.0"
   },
   "devDependencies": {
     "express": "^4.12.4",
