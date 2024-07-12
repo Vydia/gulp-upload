@@ -11,24 +11,28 @@
     "test": "mocha test/index"
   },
   "dependencies": {
-    "formstream": "^1.0.0",
+    "formstream": "^1.5.1",
     "gulp": "^3.9.0",
-    "gulp-util": "^3.0.5",
+    "plugin-error": "^2.0.1",
     "lodash": "^4.17.4",
-    "through2": "^0.6.5",
+    "through2": "^4.0.2",
+    "undici": "^6.19.2",
     "urllib": "^4.2.0"
   },
   "devDependencies": {
-    "express": "^4.12.4",
+    "express": "^4.19.2",
     "mocha": "^2.2.5",
-    "skipper": "^0.5.5"
+    "skipper": "^0.9.4"
+  },
+  "resolutions": {
+    "graceful-fs": "^4.2.11"
   },
   "keywords": [
     "gulp-upload"
   ],
   "author": "suyu34",
   "engines": {
-    "node": ">= 4.8.4"
+    "node": ">= 18.19.0"
   },
   "license": "MIT"
 }

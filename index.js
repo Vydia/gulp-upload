@@ -2,8 +2,7 @@
 
 var _ = require('lodash');
 var through = require('through2');
-var gutil = require('gulp-util');
-var PluginError = gutil.PluginError;
+var PluginError = require('plugin-error');
 var urllib = require('urllib');
 var formstream = require('formstream');
 var path = require('path');
@@ -21,13 +20,12 @@ module.exports = function(options) {
   if (!options) {
     options = {};
   }
-
   if (!options.server) {
     throw new PluginError(PLUGIN_NAME, 'Could not find server to upload.');
   }
   var callback = options.callback || function(){};
 
-  return through.obj(function(file, enc, next) {
+  return through.obj(async function(file, enc, next) {
     if (!file.isBuffer()) return next();
 
     var self = this;
@@ -52,10 +50,9 @@ module.exports = function(options) {
       stream: form
     })
 
-    urllib.request(options.server, requestOptions, function (err, data, res) {
-      callback(err, data, res);
-      self.push(file);
-      next();
-    });
+    const { data: resData, res } = await urllib.request(options.server, requestOptions);
+    callback(null, resData, res);
+    self.push(file);
+    next();
   });
 };

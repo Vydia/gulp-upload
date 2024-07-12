@@ -32,16 +32,19 @@ describe('gulp-upload', function() {
     fs.writeFileSync(filePath, content, 'utf-8');
 
     gulp.task('test', function() {
+      console.log('here')
+
       return gulp.src(filePath)
       .pipe(upload(options))
       .on('end', function(){
+console.log('aaaaa')
         var destFile = fs.readFileSync(destPath, 'utf-8');
         assert.equal(content, destFile.toString());
-
+        console.log('asdfasdf')
         done();
-      });
+      })
     });
 
-    gulp.start('test');
+    gulp.start('test')
   });
 });
