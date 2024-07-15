@@ -25,9 +25,11 @@ module.exports = function(options) {
   }
   var callback = options.callback || function(){};
 
+  console.log('got here before return')
   return through.obj(async function(file, enc, next) {
+    console.log('got here after return')
     if (!file.isBuffer()) return next();
-
+    console.log('got here asdfasdf')
     var self = this;
     var content = file.contents.toString();
     var form = formstream();
