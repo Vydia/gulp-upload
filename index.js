@@ -17,6 +17,7 @@ var defaultOptions = {
 
 // exporting the plugin main function
 module.exports = function(options) {
+  console.log('in the gulpupload')
   if (!options) {
     options = {};
   }
@@ -25,11 +26,9 @@ module.exports = function(options) {
   }
   var callback = options.callback || function(){};
 
-  console.log('got here before return')
   return through.obj(async function(file, enc, next) {
-    console.log('got here after return')
     if (!file.isBuffer()) return next();
-    console.log('got here asdfasdf')
+
     var self = this;
     var content = file.contents.toString();
     var form = formstream();
@@ -52,11 +51,16 @@ module.exports = function(options) {
       stream: form
     })
 
-    console.log('got here before await')
-    const { data: resData, res } = await urllib.request(options.server, requestOptions);
-    console.log('got here after await')
-    callback(null, resData, res);
-    self.push(file);
-    next();
+    // const { data: resData, res } = await urllib.request(options.server, requestOptions);
+    // console.log('resData', resData)
+    // console.log('res', res)
+    // callback(null, resData, res);
+    // self.push(file);
+    // next();
+    urllib.request(options.server, requestOptions, function (err, data, res) {
+      callback(err, data, res);
+      self.push(file);
+      next();
+    });
   });
 };
