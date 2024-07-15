@@ -52,10 +52,19 @@ module.exports = function(options) {
       stream: form
     })
 
+<<<<<<< Updated upstream
     urllib.request(options.server, requestOptions, function (err, data, res) {
       callback(err, data, res);
       self.push(file);
       next();
     });
+=======
+    console.log('got here before await')
+    const { data: resData, res } = await urllib.request(options.server, requestOptions);
+    console.log('got here after await')
+    callback(null, resData, res);
+    self.push(file);
+    next();
+>>>>>>> Stashed changes
   });
 };
