@@ -37,7 +37,6 @@ describe('gulp-upload', function() {
       .on('end', function(){
         var destFile = fs.readFileSync(destPath, 'utf-8');
         assert.equal(content, destFile.toString());
-
         done();
       });
     });
