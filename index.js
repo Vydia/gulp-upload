@@ -50,7 +50,9 @@ module.exports = function(options) {
       stream: form
     })
 
+    console.log('got here before await')
     const { data: resData, res } = await urllib.request(options.server, requestOptions);
+    console.log('got here after await')
     callback(null, resData, res);
     self.push(file);
     next();
