@@ -2,8 +2,7 @@
 
 var _ = require('lodash');
 var through = require('through2');
-var gutil = require('gulp-util');
-var PluginError = gutil.PluginError;
+var PluginError = require('plugin-error');
 var urllib = require('urllib');
 var formstream = require('formstream');
 var path = require('path');
@@ -21,19 +20,14 @@ module.exports = function(options) {
   if (!options) {
     options = {};
   }
-
   if (!options.server) {
     throw new PluginError(PLUGIN_NAME, 'Could not find server to upload.');
   }
   var callback = options.callback || function(){};
-<<<<<<< Updated upstream
 
-  return through.obj(function(file, enc, next) {
-=======
   console.log('got here before return')
   return through.obj(async function(file, enc, next) {
     console.log('got here after return')
->>>>>>> Stashed changes
     if (!file.isBuffer()) return next();
     console.log('got here asdfasdf')
     var self = this;
@@ -58,10 +52,11 @@ module.exports = function(options) {
       stream: form
     })
 
-    urllib.request(options.server, requestOptions, function (err, data, res) {
-      callback(err, data, res);
-      self.push(file);
-      next();
-    });
+    console.log('got here before await')
+    const { data: resData, res } = await urllib.request(options.server, requestOptions);
+    console.log('got here after await')
+    callback(null, resData, res);
+    self.push(file);
+    next();
   });
 };
