@@ -26,10 +26,16 @@ module.exports = function(options) {
     throw new PluginError(PLUGIN_NAME, 'Could not find server to upload.');
   }
   var callback = options.callback || function(){};
+<<<<<<< Updated upstream
 
   return through.obj(function(file, enc, next) {
+=======
+  console.log('got here before return')
+  return through.obj(async function(file, enc, next) {
+    console.log('got here after return')
+>>>>>>> Stashed changes
     if (!file.isBuffer()) return next();
-
+    console.log('got here asdfasdf')
     var self = this;
     var content = file.contents.toString();
     var form = formstream();
